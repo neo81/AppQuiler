@@ -11,3 +11,5 @@ Reglas confirmadas: semana de 6 noches a precio fijo comenzando cualquier día, 
 La infraestructura elegida es íntegramente Cloudflare: un Worker con archivos estáticos, API y D1. Se sustituyó la propuesta inicial de Supabase por tener ocupado el cupo gratuito del propietario.
 
 El desarrollo y las pruebas son locales. La publicación requiere crear una cuenta Cloudflare gratuita. Las tarifas reales todavía deben cargarse y falta la verificación en iPhone físico.
+
+Se cambió el nombre del Worker a appquiler para usar la dirección appquiler.controlvg.workers.dev. La base remota y su identificador todavía deben sincronizarse con la configuración del repositorio.
