@@ -21,3 +21,5 @@ Se retiró SETUP_TOKEN después de confirmar el primer acceso. Se agregaron obse
 Se reemplazó el teléfono por observaciones en las opciones de huéspedes y se agregó un bloque con el texto completo del huésped seleccionado para distinguir nombres iguales.
 
 Se corrigió la edición de cantidad de personas para permitir un valor vacío mientras se escribe. Se eliminó la modalidad manual del formulario y el servidor calcula automáticamente semanas y noches adicionales según las fechas. Se preservó el cálculo histórico para restaurar respaldos previos.
+
+Se movieron los datos identificatorios del huésped al encabezado de la ficha de reserva, debajo del nombre. Se agregó compatibilidad visual con estadías automáticas de más de dos semanas.

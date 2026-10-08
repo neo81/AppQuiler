@@ -125,3 +125,5 @@ Las observaciones del huésped también se cargan al crear una persona desde una
 El selector de huéspedes muestra nombre y observaciones de identificación. Al seleccionar una persona, sus observaciones completas quedan visibles debajo.
 
 El formulario calcula la modalidad automáticamente a partir de las fechas: hasta 5 noches se cobra por noche; 6 noches equivalen a una semana, 13 a dos semanas, 20 a tres y 27 a cuatro. Cada semana adicional agrega 7 noches; las restantes usan la tarifa nocturna. No hay una tarifa mensual independiente. Las reservas anteriores conservan su importe hasta que se editen.
+
+La ficha de reserva muestra el teléfono y las observaciones identificatorias del huésped inmediatamente debajo de su nombre.

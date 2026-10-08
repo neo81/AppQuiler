@@ -7,3 +7,5 @@
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .guest-identification{margin:12px 0;padding:12px 16px;border:1px solid var(--border);border-radius:12px;overflow-wrap:anywhere}.guest-identification p{margin:6px 0 0}
+
+.reservation-guest-contact{display:flex;align-items:center;gap:6px}.page-heading .reservation-guest-identification{color:var(--text);font-weight:500;overflow-wrap:anywhere}
