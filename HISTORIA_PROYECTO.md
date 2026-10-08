@@ -15,3 +15,5 @@ El desarrollo y las pruebas son locales. La publicación requiere crear una cuen
 Se cambió el nombre del Worker a appquiler para usar la dirección appquiler.controlvg.workers.dev. La base remota y su identificador todavía deben sincronizarse con la configuración del repositorio.
 
 Se configuró la base remota D1 appquiler con el ID proporcionado por el propietario y SITE_ORIGIN=https://appquiler.controlvg.workers.dev. La conexión de compilaciones apunta a neo81/AppQuiler. Falta aplicar el esquema remoto y habilitar el primer dispositivo.
+
+Se retiró SETUP_TOKEN después de confirmar el primer acceso. Se agregaron observaciones del huésped al alta desde reservas, indicación de nombre sin apellido y búsqueda por observaciones. Se reutiliza el campo existente notes, sin cambios de esquema.

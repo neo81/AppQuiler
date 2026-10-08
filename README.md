@@ -119,3 +119,5 @@ npm run test:e2e
 El test de navegador usa Edge en Windows, autenticador virtual y una base local nueva por ejecución. Para otro equipo configurá `E2E_BROWSER` con la ruta de un navegador Chromium compatible.
 
 Ver [VALIDACION.md](VALIDACION.md) para evidencias y límites. La compatibilidad visual se verificó a 1440 px y 390 px; **no se ha probado aún la instalación ni Face ID en un iPhone físico ni la infraestructura remota**.
+
+Las observaciones del huésped también se cargan al crear una persona desde una reserva. Se puede ingresar solo su nombre y buscar huéspedes por sus observaciones de identificación.
