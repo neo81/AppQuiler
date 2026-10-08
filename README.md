@@ -58,7 +58,7 @@ La publicación requiere tu cuenta gratuita de Cloudflare y su autorización. No
 
 1. Creá la cuenta de Cloudflare y autenticá Wrangler con `npx wrangler login`.
 2. Creá una base D1 dedicada: `npx wrangler d1 create gesell`.
-3. Copiá el `database_id` real al binding `DB` de `wrangler.jsonc`. El identificador actual es solo un marcador local.
+3. Copiá el `database_id` real al binding `DB` de `wrangler.jsonc`. La configuración actual ya apunta a la base appquiler del propietario; no crees otra base para esta publicación.
 4. Elegí una dirección estable bajo tu subdominio gratuito de Workers, por ejemplo el nombre del Worker `appquiler` más el subdominio asignado a tu cuenta. No hace falta comprar un dominio.
 5. Configurá `vars.SITE_ORIGIN` en `wrangler.jsonc` con esa dirección completa **HTTPS**, sin ruta. Debe coincidir exactamente con el origen público. No adivines el subdominio; verificá el que asignó Cloudflare.
 6. Generá un código aleatorio de 32 bytes y guardalo como secreto con `npx wrangler secret put SETUP_TOKEN`. No uses el código local en producción ni lo pongas en `vars`.

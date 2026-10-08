@@ -2,10 +2,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "appquiler",
   "main": "worker/index.ts",
+  "vars": { "SITE_ORIGIN": "https://appquiler.controlvg.workers.dev" },
   "compatibility_date": "2026-10-08",
   "compatibility_flags": ["nodejs_compat"],
   "assets": { "directory": "dist", "binding": "ASSETS", "not_found_handling": "single-page-application", "run_worker_first": ["/api/*"] },
-  "d1_databases": [{ "binding": "DB", "database_name": "gesell", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }],
+  "d1_databases": [{ "binding": "DB", "database_name": "appquiler", "database_id": "9c823e09-125e-467b-80fb-c12a89038932", "migrations_dir": "migrations" }],
   "ratelimits": [
     { "name": "AUTH_LIMIT", "namespace_id": "202701", "simple": { "limit": 30, "period": 60 } },
     { "name": "API_LIMIT", "namespace_id": "202702", "simple": { "limit": 120, "period": 60 } }
