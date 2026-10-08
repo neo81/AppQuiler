@@ -1,0 +1,36 @@
+{
+  "name": "gesell-control",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && npm run preview",
+    "setup:local": "node scripts/local-setup.mjs",
+    "build": "tsc --noEmit && vite build",
+    "preview": "wrangler dev --ip 127.0.0.1 --port 8787",
+    "db:local": "wrangler d1 migrations apply gesell --local",
+    "test": "vitest run tests",
+    "test:e2e": "node scripts/test-e2e.mjs",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "14.0.0",
+    "@simplewebauthn/server": "14.0.3",
+    "lucide-react": "1.53.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261008.1",
+    "@playwright/test": "1.64.0",
+    "@types/node": "26.6.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.3",
+    "wrangler": "4.149.0"
+  }
+}

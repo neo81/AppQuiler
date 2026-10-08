@@ -1,0 +1,57 @@
+import {test,expect} from '@playwright/test';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {resolve} from 'node:path';
+test('Acceso privado, reservas, huéspedes, cobros, calendario y cancelación',async({page,context,request})=>{
+  mkdirSync(resolve('.wrangler/capturas'),{recursive:true});
+  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+  const unauthorized=await request.get('/api/data');expect(unauthorized.status()).toBe(401);
+  const forged=await request.post('/api/guests',{headers:{Origin:'https://otro-sitio.invalid'},data:{name:'Ataque',phone:'11555555'}});expect(forged.status()).toBe(403);
+  await page.goto('/');await expect(page.getByRole('heading',{name:'Habilitá este dispositivo'})).toBeVisible();
+  const cdp=await context.newCDPSession(page);await cdp.send('WebAuthn.enable');const {authenticatorId}=await cdp.send('WebAuthn.addVirtualAuthenticator',{options:{protocol:'ctap2',transport:'internal',hasResidentKey:true,hasUserVerification:true,isUserVerified:true,automaticPresenceSimulation:true}});
+  const code=readFileSync('.dev.vars','utf8').match(/SETUP_TOKEN=(.*)/)![1].trim();
+  await page.getByLabel('Nombre del dispositivo').fill('Pruebas · PC');await page.getByLabel('Código de habilitación').fill(code);await page.getByRole('button',{name:'Habilitar y entrar'}).click();
+  await expect(page.getByRole('heading',{name:'Tu temporada, en orden.'})).toBeVisible();
+  // Configurar tarifas desde la interfaz, después crear huésped y reserva en un mismo flujo.
+  await page.getByRole('button',{name:'Tarifas',exact:true}).click();await page.getByRole('button',{name:'Nueva tarifa',exact:true}).click();
+  await page.getByLabel('Vigente desde').fill('2027-01-01');await page.getByLabel('Precio por noche ($)',{exact:true}).fill('110000');await page.getByLabel('Precio semanal ($)',{exact:true}).fill('700000');await page.getByRole('button',{name:'Guardar',exact:true}).click();await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByRole('button',{name:'Reservas',exact:true}).click();await page.getByRole('button',{name:'Nueva reserva',exact:true}).click();await page.getByRole('button',{name:'Nuevo huésped',exact:true}).click();
+  await page.getByLabel('Nombre y apellido').fill('Lucía Pérez');await page.getByLabel('Teléfono',{exact:true}).fill('+54 9 11 5555 0100');await page.getByLabel('Cantidad de personas').fill('4');await page.getByLabel('Garantía acordada ($)').fill('100000');await page.getByLabel('Observaciones',{exact:true}).fill('Familia. Viajan con dos niños.');
+  await page.getByRole('button',{name:'Guardar reserva',exact:true}).click();await expect(page.getByRole('heading',{name:'Lucía Pérez',exact:true})).toBeVisible();
+  await expect(page.getByText('6 noches',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Registrar movimiento',exact:true}).click();await page.getByLabel('Importe ($)').fill('200000');await page.getByLabel('Observaciones',{exact:true}).fill('Seña');await page.getByRole('dialog').getByRole('button',{name:'Registrar movimiento',exact:true}).click();await expect(page.getByText('Pago de alquiler',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Registrar movimiento',exact:true}).click();await page.getByLabel('Tipo de movimiento').selectOption('deposit');await page.getByLabel('Importe ($)').fill('100000');await page.getByRole('dialog').getByRole('button',{name:'Registrar movimiento',exact:true}).click();await expect(page.getByText('Garantía recibida',{exact:true})).toBeVisible();
+  const data=await page.evaluate(async()=>await(await fetch('/api/data')).json()) as any;const r=data.reservations[0];
+  // Pruebas de límites y carreras mediante la misma API que usa la interfaz.
+  const post=async(path:string,b:unknown)=>page.evaluate(async({path,b})=>{const res=await fetch('/api'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return {status:res.status,body:await res.json()};},{path,b});
+  const secondGuest=await post('/guests',{name:'Martín López',phone:'+54 9 11 5555 0200',notes:''});expect(secondGuest.status).toBe(201);
+  const raceData={guest_id:secondGuest.body.id,arrival:'2027-01-10',departure:'2027-01-16',arrival_time:'15:00',departure_time:'10:00',persons:2,mode:'week',base:'week',nightly:11000000,weekly:70000000,guarantee:0,notes:''};
+  const race=await Promise.all([post('/reservations',raceData),post('/reservations',raceData)]);expect(race.map(x=>x.status).sort()).toEqual([201,409]);
+  const payment={id:crypto.randomUUID(),reservation_id:r.id,kind:'rent',amount:15000000,date:'2026-10-08',method:'Transferencia',notes:'Pago parcial'};
+  const duplicate=await Promise.all([post('/payments',payment),post('/payments',payment)]);expect(duplicate.every(p=>p.status===200||p.status===201)).toBe(true);
+  expect((await post('/payments',{...payment,id:crypto.randomUUID(),amount:60000000})).status).toBe(409);
+  const stale=await post('/reservations',{...r,version:9999});expect(stale.status).toBe(409);
+  const invalid=await post('/guests',{name:'',phone:'x'});expect(invalid.status).toBe(400);
+  await page.getByRole('button',{name:'Actualizar datos'}).click();await page.getByRole('button',{name:'Calendario',exact:true}).click();await expect(page.locator('.calendar-weekdays')).toHaveText('DomLunMarMiéJueVieSáb');await expect(page.getByText('Sale Lucía Pérez',{exact:true})).toBeVisible();
+  await expect(page.getByRole('status')).toHaveCount(0,{timeout:10000});
+  await page.screenshot({path:resolve('.wrangler/capturas/calendario-pc.png'),fullPage:true,animations:"disabled",style:".toast{visibility:hidden}"});
+  await page.setViewportSize({width:390,height:844});await expect(page.getByRole('heading',{name:'Calendario',exact:true})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);await page.screenshot({path:resolve('.wrangler/capturas/calendario-iphone.png'),fullPage:true,animations:"disabled",style:".toast{visibility:hidden}"});
+  await page.getByRole('button',{name:'Nueva reserva',exact:true}).click();await expect(page.getByRole('dialog')).toBeVisible();expect(await page.getByRole('dialog').evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);await page.getByRole('button',{name:'Cerrar',exact:true}).click();
+  await page.setViewportSize({width:1440,height:1050});await page.getByRole('button',{name:'Inicio',exact:true}).click();await page.screenshot({path:resolve('.wrangler/capturas/inicio-pc.png'),fullPage:true,animations:"disabled",style:".toast{visibility:hidden}"});
+  await page.getByRole('button',{name:'Reservas',exact:true}).click();await page.getByRole('button',{name:'Lucía Pérez',exact:true}).first().click();await page.screenshot({path:resolve('.wrangler/capturas/ficha-reserva.png'),fullPage:true,animations:"disabled",style:".toast{visibility:hidden}"});
+  await page.getByRole('button',{name:'Cancelar reserva',exact:true}).click();await page.getByLabel('Motivo').fill('Cambio de planes del huésped');await page.getByRole('button',{name:'Confirmar cancelación'}).click();await expect(page.getByText('Reserva cancelada · Fechas liberadas',{exact:true})).toBeVisible();
+  expect((await post('/reservations',{...raceData,arrival:'2027-01-04',departure:'2027-01-10'})).status).toBe(201);
+  const backup=await page.evaluate(async()=>await(await fetch('/api/export')).json());writeFileSync(resolve('.wrangler/e2e-backup.json'),JSON.stringify(backup));
+  expect(backup.payments.filter((p:any)=>p.id===payment.id)).toHaveLength(1);expect(backup.guests).toHaveLength(2);expect(backup.audit.some((h:any)=>h.action==='cancel')).toBe(true);
+  // La sesión se recuerda; luego se verifica login real con la llave ya registrada.
+  await page.reload();await expect(page.getByRole('heading',{name:'Tu temporada, en orden.'})).toBeVisible();
+  await page.getByRole('button',{name:'Configuración',exact:true}).click();await page.getByRole('button',{name:'Cerrar sesión',exact:true}).click();await expect(page.getByRole('heading',{name:'Todo listo para volver'})).toBeVisible();
+  await page.getByRole('button',{name:'Entrar con mi llave'}).click();await expect(page.getByRole('heading',{name:'Tu temporada, en orden.'})).toBeVisible();
+  expect((await post('/guests',{name:'<img src=x onerror=window.gesellXSS=1>',phone:'1155559999',notes:'<script>window.gesellXSS=1</script>'})).status).toBe(201);await page.getByRole('button',{name:'Actualizar datos'}).click();await page.getByRole('button',{name:'Huéspedes',exact:true}).click();await expect(page.getByRole('heading',{name:'<img src=x onerror=window.gesellXSS=1>',exact:true})).toBeVisible();expect(await page.evaluate(()=>(window as any).gesellXSS)).toBeUndefined();
+  const invite=await post('/auth/invite',{});expect(invite.status).toBe(200);
+  const other=await context.browser()!.newContext({baseURL:'http://localhost:8787'});const second=await other.newPage();const secondCDP=await other.newCDPSession(second);await secondCDP.send('WebAuthn.enable');await secondCDP.send('WebAuthn.addVirtualAuthenticator',{options:{protocol:'ctap2',transport:'internal',hasResidentKey:true,hasUserVerification:true,isUserVerified:true,automaticPresenceSimulation:true}});
+  await second.goto('/');await second.getByRole('button',{name:'Habilitar otro dispositivo',exact:true}).click();await second.getByLabel('Nombre del dispositivo').fill('Pruebas · Segundo dispositivo');await second.getByLabel('Código de habilitación').fill(invite.body.code);await second.getByRole('button',{name:'Habilitar y entrar'}).click();await expect(second.getByRole('heading',{name:'Tu temporada, en orden.'})).toBeVisible();
+  expect((await post('/auth/register/options',{code:invite.body.code})).status).toBe(403);
+  const updated=await page.evaluate(async()=>await(await fetch('/api/data')).json()) as any;expect(updated.devices).toHaveLength(2);const extra=updated.devices.find((d:any)=>!d.current);expect((await post('/auth/revoke',{id:extra.id})).status).toBe(200);
+  expect(await second.evaluate(async()=>(await fetch('/api/data')).status)).toBe(401);await other.close();
+  expect(errors).toEqual([]);await cdp.send('WebAuthn.removeVirtualAuthenticator',{authenticatorId});
+});
