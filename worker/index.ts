@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { authRoute, body, HttpError, json, requireSession, sameOrigin } from './auth';
 import type { Env } from './auth';
-import { reservationSchema,guestSchema,paymentSchema,rateSchema,blockSchema,idSchema,calculatePrice } from '../shared/domain';
+import { reservationSchema,guestSchema,paymentSchema,rateSchema,blockSchema,idSchema,calculateAutomaticPrice } from '../shared/domain';
 const secureHeaders={'Content-Security-Policy':"default-src 'none'; frame-ancestors 'none'",'Referrer-Policy':'no-referrer','X-Frame-Options':'DENY','Strict-Transport-Security':'max-age=31536000'};
 async function route(req:Request,env:Env){
   const path=new URL(req.url).pathname;
@@ -41,7 +41,7 @@ async function route(req:Request,env:Env){
     await env.DB.prepare('INSERT INTO guests(id,name,phone,notes) VALUES(?,?,?,?)').bind(id,v.name,v.phone,v.notes).run();return json({id},201);
   }
   if(path==='/api/reservations'){
-    const v=reservationSchema.parse(b);const price=calculatePrice(v);
+    const parsed=reservationSchema.parse(b);const price=calculateAutomaticPrice(parsed);const v={...parsed,mode:price.mode,base:price.base};
     if(b.id){
       const existing=idSchema.parse(b.id);if(!v.version)throw new HttpError(400,'Falta la versión de la reserva.');
       const r=await env.DB.prepare("UPDATE reservations SET guest_id=?,arrival=?,departure=?,arrival_time=?,departure_time=?,persons=?,mode=?,base=?,nightly=?,weekly=?,total=?,guarantee=?,notes=?,version=version+1 WHERE id=? AND version=? AND status='confirmed'").bind(v.guest_id,v.arrival,v.departure,v.arrival_time,v.departure_time,v.persons,v.mode,v.base,v.nightly,v.weekly,price.total,v.guarantee,v.notes,existing,v.version).run();

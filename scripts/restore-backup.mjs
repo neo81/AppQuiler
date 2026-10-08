@@ -2,7 +2,7 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 import {DatabaseSync} from 'node:sqlite';
 import {z} from 'zod';
-import {guestSchema,reservationSchema,paymentSchema,rateSchema,blockSchema,idSchema,calculatePrice,overlaps} from '../shared/domain.ts';
+import {guestSchema,reservationSchema,paymentSchema,rateSchema,blockSchema,idSchema,calculatePrice,calculateAutomaticPrice,overlaps} from '../shared/domain.ts';
 const [source,destination]=process.argv.slice(2);
 if(!source||!destination)throw new Error('Uso: node scripts/restore-backup.mjs respaldo.json nueva-base.sql');
 const raw=readFileSync(source,'utf8');if(Buffer.byteLength(raw)>30_000_000)throw new Error('Archivo demasiado grande.');
@@ -20,7 +20,7 @@ const tables={guests,reservations,payments,rates,blocks,audit};const inserts=[];
 const quote=v=>v===null?'NULL':typeof v==='number'?String(v):"'"+v.replaceAll("'","''")+"'";
 db.exec('BEGIN');
 for(const [table,rows] of Object.entries(tables))for(const row of rows){const columns=Object.keys(row);const values=Object.values(row);db.prepare(`INSERT INTO ${table}(${columns.join(',')}) VALUES(${columns.map(()=>'?').join(',')})`).run(...values);inserts.push(`INSERT INTO ${table}(${columns.join(',')}) VALUES(${values.map(quote).join(',')});`);}
-for(const r of reservations){if(calculatePrice(r).total!==r.total)throw new Error('Precio inconsistente en reserva '+r.id);}
+for(const r of reservations){let legacy;try{legacy=calculatePrice(r).total;}catch{}if(legacy!==r.total&&calculateAutomaticPrice(r).total!==r.total)throw new Error('Precio inconsistente en reserva '+r.id);}
 const overlap=db.prepare("SELECT a.id FROM reservations a JOIN reservations b ON a.id<b.id AND a.status='confirmed' AND b.status='confirmed' AND a.arrival<b.departure AND a.departure>b.arrival LIMIT 1").get();
 const blocked=db.prepare("SELECT r.id FROM reservations r JOIN blocks b ON r.status='confirmed' AND b.active=1 AND r.arrival<b.departure AND r.departure>b.arrival LIMIT 1").get();
 const blockOverlap=db.prepare('SELECT a.id FROM blocks a JOIN blocks b ON a.id<b.id AND a.active=1 AND b.active=1 AND a.arrival<b.departure AND a.departure>b.arrival LIMIT 1').get();

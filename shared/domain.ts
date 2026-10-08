@@ -9,7 +9,7 @@ export const reservationSchema = z.object({
   guest_id: idSchema, arrival: dateSchema, departure: dateSchema, arrival_time: timeSchema, departure_time: timeSchema,
   persons: z.number().int().min(1).max(20), mode: z.enum(['night','week','fortnight','combined']), base: z.enum(['week','fortnight']).default('week'),
   nightly: amountSchema, weekly: amountSchema, guarantee: amountSchema, notes: z.string().trim().max(3000).default(''), version: z.number().int().min(1).optional()
-}).superRefine((v, ctx) => { try { calculatePrice(v); } catch (e) { ctx.addIssue({ code: 'custom', message: (e as Error).message }); } });
+}).superRefine((v, ctx) => { try { calculateAutomaticPrice(v); } catch (e) { ctx.addIssue({ code: 'custom', message: (e as Error).message }); } });
 export const paymentSchema = z.object({ id: idSchema, kind: z.enum(['rent','deposit','deposit_refund','rent_refund']), amount: amountSchema.refine(v=>v>0), date: dateSchema, method: z.enum(['Transferencia','Efectivo','Otro']), notes: z.string().trim().max(1000).default('') });
 export const blockSchema = z.object({ arrival: dateSchema, departure: dateSchema, reason: z.string().trim().min(2).max(200) }).refine(v=>v.departure>v.arrival, 'La fecha de fin debe ser posterior al inicio');
 export type Mode = 'night'|'week'|'fortnight'|'combined';
@@ -33,6 +33,21 @@ export function calculatePrice(v:PriceInput) {
   }
   if(!Number.isSafeInteger(total)||total>100_000_000_00) throw new Error('El importe es demasiado grande.');
   return { nights,total,description };
+}
+export function calculateAutomaticPrice(v:Pick<PriceInput,'arrival'|'departure'|'nightly'|'weekly'>) {
+  const nights=nightsBetween(v.arrival,v.departure);
+  if(!Number.isFinite(nights)||nights<1||nights>365)throw new Error('La estadía debe durar entre 1 y 365 noches.');
+  if(![v.nightly,v.weekly].every(x=>Number.isSafeInteger(x)&&x>=0))throw new Error('Tarifa inválida.');
+  const weeks=Math.floor((nights+1)/7);
+  const extras=weeks?nights-(weeks*7-1):nights;
+  if(weeks&&!v.weekly)throw new Error('Ingresá una tarifa semanal.');
+  if(extras&&!v.nightly)throw new Error('Ingresá una tarifa por noche.');
+  const total=weeks*v.weekly+extras*v.nightly;
+  if(!Number.isSafeInteger(total)||total>100_000_000_00)throw new Error('El importe es demasiado grande.');
+  const mode:Mode=weeks===0?'night':extras?'combined':weeks===1?'week':weeks===2?'fortnight':'combined';
+  const base:'week'|'fortnight'=weeks>=2?'fortnight':'week';
+  const description=weeks?`${weeks} semana${weeks===1?'':'s'}${extras?` + ${extras} noche${extras===1?'':'s'}`:''}`:`${extras} noche${extras===1?'':'s'}`;
+  return {nights,total,description,mode,base};
 }
 export function overlaps(a:string,b:string,c:string,d:string) { return a<d&&b>c; }
 export interface Guest { id:string; name:string;phone:string;notes:string;created_at:string }

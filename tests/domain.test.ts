@@ -1,5 +1,5 @@
 import {describe,it,expect} from 'vitest';
-import {calculatePrice,overlaps,reservationSchema,dateSchema} from '../shared/domain';
+import {calculatePrice,calculateAutomaticPrice,overlaps,reservationSchema,dateSchema} from '../shared/domain';
 const input={arrival:'2027-01-04',departure:'2027-01-10',nightly:11000000,weekly:70000000,mode:'week' as const};
 describe('Tarifas comerciales acordadas',()=>{
   it('semana de seis noches a precio fijo cualquier día',()=>{expect(calculatePrice(input)).toEqual({nights:6,total:70000000,description:'1 semana'});expect(calculatePrice({...input,arrival:'2027-01-06',departure:'2027-01-12'}).total).toBe(70000000);});
@@ -12,4 +12,11 @@ describe('Tarifas comerciales acordadas',()=>{
 describe('Disponibilidad',()=>{
   it('acepta salida e ingreso el mismo día',()=>{expect(overlaps('2027-01-04','2027-01-10','2027-01-10','2027-01-16')).toBe(false);});
   it('detecta cruce parcial y contención completa',()=>{expect(overlaps('2027-01-04','2027-01-10','2027-01-09','2027-01-13')).toBe(true);expect(overlaps('2027-01-01','2027-01-20','2027-01-04','2027-01-10')).toBe(true);});
+});
+
+describe('Precio automático por fechas',()=>{
+  it('calcula noches, semanas y adicionales sin modalidad manual',()=>{
+    const totals=[[3,33000000],[6,70000000],[7,81000000],[13,140000000],[14,151000000],[20,210000000],[30,313000000]];
+    for(const [n,total] of totals){const departure=new Date(Date.UTC(2027,0,4+n)).toISOString().slice(0,10);expect(calculateAutomaticPrice({...input,departure}).total).toBe(total);}
+  });
 });
