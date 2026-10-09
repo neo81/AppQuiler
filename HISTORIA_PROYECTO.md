@@ -33,3 +33,5 @@ Se corrigió el desbordamiento del inicio móvil con reservas cargadas: tabla co
 Se amplió nuevamente la tipografía de las fichas móviles tras la prueba en iPhone real: nombres, fechas, importes, estado y saldos. Se aumentó el contraste de textos secundarios.
 
 Se corrigió la superposición del encabezado al abrir el menú móvil, se cambió la barra de estado de iOS a default, se capitalizó Gesell y se aclararon la descripción del departamento y los filtros del resumen.
+
+Se versionó la referencia del icono de iOS y se declaró su tamaño de 180 px para renovar la instalación. Las correcciones de menú y períodos ya estaban incorporadas en 26fade6.
