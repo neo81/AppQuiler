@@ -47,3 +47,5 @@ Se añadió navegación inferior móvil de estilo cristal con cápsula activa an
 Se reforzó el contraste global a pedido del propietario: fondo diferenciado, bordes y controles más definidos, textos secundarios oscuros y encabezado del calendario sombreado.
 
 Se bajó 8 px la barra inferior manteniendo el área segura del iPhone. Se ordenó explícitamente la lista de reservas por ingreso y salida, de fechas más tempranas a más tardías.
+
+Se probó bajar otros 8 px la barra en modo PWA, usando el área segura menos 4 px y un mínimo de 8 px sobre el borde del viewport. En navegador se mantiene el margen anterior.
