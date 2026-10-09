@@ -58,3 +58,20 @@
  .season-note p{font-size:14px;line-height:1.5}
  .season-note .button{grid-column:1 / -1;margin:0;width:100%;font-size:14px;min-height:44px}
 }
+
+@media(max-width:700px){
+ .table-scroll table{font-size:16px}
+ .table-scroll .name-button{font-size:19px;line-height:1.35}
+ .table-scroll .table-sub{font-size:16px;line-height:1.45;color:#607783;margin-top:4px}
+ .table-scroll td:nth-child(2)::before,.table-scroll td:nth-child(3)::before{font-size:15px;color:#47616d}
+ .table-scroll td{font-size:16px;line-height:1.45;padding:4px 0}
+ .table-scroll .badge{font-size:14px;padding:7px 10px}
+ .table-scroll tr{padding:16px 0}
+ .table-scroll td:last-child{padding-top:4px}
+ .table-scroll td:last-child .icon-button{min-height:36px;height:36px}
+ .dashboard-grid .section-heading p{font-size:16px}
+ .dashboard-grid .section-heading .text-button{font-size:16px}
+ .pending-row>div strong{font-size:17px}.pending-row span{font-size:15px;color:#607783}
+ .pending-row>strong{font-size:18px}
+ .page-heading p,.guest-note,.guest-identification p,.reservation-guest-identification{font-size:16px;line-height:1.5}
+}

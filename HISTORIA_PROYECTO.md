@@ -29,3 +29,5 @@ Se reemplazaron etiquetas diarias por barras continuas por fila semanal, con fil
 Se aumentó la tipografía móvil de calendario, formularios, detalles y resúmenes, y el área de controles táctiles. Las barras móviles pasan de 9 a 12 px y los números de fechas de 11 a 14 px.
 
 Se corrigió el desbordamiento del inicio móvil con reservas cargadas: tabla convertida a fichas verticales, cabecera flexible, saldos debajo de cada persona y bloque inferior en una cuadrícula adaptable.
+
+Se amplió nuevamente la tipografía de las fichas móviles tras la prueba en iPhone real: nombres, fechas, importes, estado y saldos. Se aumentó el contraste de textos secundarios.
