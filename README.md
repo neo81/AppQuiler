@@ -145,3 +145,5 @@ La carga inicial utiliza un indicador discreto con aparición demorada; el botó
 En iPhone se dispone de una barra inferior fija con Inicio, Calendario y Reservas, inspirada en el estilo de AppCalorIA. Se oculta al abrir el menú o los formularios y respeta el área segura inferior.
 
 El tema claro usa fondo gris azulado, tarjetas blancas con bordes definidos y textos secundarios oscuros; la cuadrícula del calendario tiene líneas de mayor contraste.
+
+La lista de reservas se ordena por fecha de ingreso ascendente, con la fecha de salida como desempate. La barra móvil respeta el área segura inferior con un margen de 4 px.
