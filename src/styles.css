@@ -75,3 +75,6 @@
  .pending-row>strong{font-size:18px}
  .page-heading p,.guest-note,.guest-identification p,.reservation-guest-identification{font-size:16px;line-height:1.5}
 }
+
+.summary-period-label{font-size:14px;font-weight:600;margin-bottom:8px}.summary-period-help{font-size:14px;line-height:1.5;color:#607783;margin:-8px 0 20px;max-width:740px}
+@media(max-width:700px){.sidebar{z-index:60;padding-top:calc(20px + env(safe-area-inset-top));padding-bottom:calc(24px + env(safe-area-inset-bottom));height:100dvh;overflow-y:auto}.menu-scrim{z-index:50}.menu-open .topbar{visibility:hidden;backdrop-filter:none}.sidebar .brand{flex-shrink:0}.sidebar-property{flex-shrink:0}.summary-period-help{font-size:15px;margin-top:0}.period-controls{flex-wrap:wrap}.period-controls .segments{flex:1;min-width:0}.period-controls .segments button{font-size:13px;min-height:44px;flex:1}.sidebar-property strong{font-size:17px}.sidebar-property span{font-size:14px}}

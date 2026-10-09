@@ -135,3 +135,5 @@ Se ampliaron textos y controles de la interfaz móvil, especialmente fechas y ba
 En móviles, próximas estadías y reservas se muestran como fichas verticales con fechas, total y estado; los saldos y el bloque de calendario se adaptan al ancho disponible.
 
 Las fichas de reservas móviles usan nombres de 19 px, fechas e importes de 16 px y estados de 14 px, con textos secundarios de mayor contraste.
+
+El inicio identifica el período del resumen (verano o año completo) y explica qué totales filtra. El menú móvil usa una capa opaca sobre la cabecera y la PWA utiliza una barra de estado de iOS no translúcida.

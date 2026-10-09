@@ -31,3 +31,5 @@ Se aumentó la tipografía móvil de calendario, formularios, detalles y resúme
 Se corrigió el desbordamiento del inicio móvil con reservas cargadas: tabla convertida a fichas verticales, cabecera flexible, saldos debajo de cada persona y bloque inferior en una cuadrícula adaptable.
 
 Se amplió nuevamente la tipografía de las fichas móviles tras la prueba en iPhone real: nombres, fechas, importes, estado y saldos. Se aumentó el contraste de textos secundarios.
+
+Se corrigió la superposición del encabezado al abrir el menú móvil, se cambió la barra de estado de iOS a default, se capitalizó Gesell y se aclararon la descripción del departamento y los filtros del resumen.
