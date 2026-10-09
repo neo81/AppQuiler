@@ -149,3 +149,5 @@ El tema claro usa fondo gris azulado, tarjetas blancas con bordes definidos y te
 La lista de reservas se ordena por fecha de ingreso ascendente, con la fecha de salida como desempate. La barra móvil respeta el área segura inferior con un margen de 4 px.
 
 La barra inferior móvil permanece disponible en todas las secciones y en la ficha de reserva. Los diálogos y el menú se superponen para permitir completar las operaciones.
+
+La barra superior se simplificó a menú, Gesell y actualizar datos; se retiraron la ruta de sección y el indicador decorativo de espacio privado.

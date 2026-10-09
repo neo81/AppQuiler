@@ -51,3 +51,5 @@ Se bajó 8 px la barra inferior manteniendo el área segura del iPhone. Se orden
 Se probó bajar otros 8 px la barra en modo PWA, usando el área segura menos 4 px y un mínimo de 8 px sobre el borde del viewport. En navegador se mantiene el margen anterior.
 
 Se eliminó la ocultación de la barra al abrir fichas de reserva y formularios. La ficha conserva Reservas como sección activa. Se bajó otros 6 px en modo PWA, sujeto a prueba en dispositivo real.
+
+Se simplificó el encabezado a pedido del propietario: menú a la izquierda, Gesell centrado y actualización a la derecha.
