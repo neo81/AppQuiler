@@ -141,3 +141,5 @@ El inicio identifica el período del resumen (verano o año completo) y explica 
 Se retiraron del Inicio el selector de período y su leyenda. El resumen conserva enero-marzo de 2027 hasta definir una sección de reportes. El icono iOS usa una referencia nueva sin parámetros y una copia de compatibilidad en la raíz.
 
 La carga inicial utiliza un indicador discreto con aparición demorada; el botón de reintento solo aparece cuando hay un error de conexión.
+
+En iPhone se dispone de una barra inferior fija con Inicio, Calendario y Reservas, inspirada en el estilo de AppCalorIA. Se oculta al abrir el menú o los formularios y respeta el área segura inferior.

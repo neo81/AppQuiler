@@ -41,3 +41,5 @@ Se quitaron los controles y explicación del período del Inicio a pedido del pr
 Se verificaron todos los PNG de instalación: dimensiones declaradas correctas y RGB opaco, respuestas image/png. Se renovaron también las referencias del manifiesto para separar su caché del icono mostrado por Safari. La confirmación final requiere iOS real.
 
 Se reemplazaron las pantallas intermedias de carga por un indicador unificado sin botón de reintento durante solicitudes normales. El indicador se revela tras 350 ms para reducir el parpadeo en cargas rápidas.
+
+Se añadió navegación inferior móvil de estilo cristal con cápsula activa animada, tomando como referencia la implementación actual de AppCalorIA. Incluye etiquetas, estado accesible, movimiento reducido y fondo alternativo sin desenfoque.
