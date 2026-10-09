@@ -39,3 +39,5 @@ Se versionó la referencia del icono de iOS y se declaró su tamaño de 180 px p
 Se quitaron los controles y explicación del período del Inicio a pedido del propietario. Se mantuvo el período enero-marzo 2027. Se renovó el archivo referenciado por apple-touch-icon con URL absoluta y fallback precomposed para investigar la instalación en iOS.
 
 Se verificaron todos los PNG de instalación: dimensiones declaradas correctas y RGB opaco, respuestas image/png. Se renovaron también las referencias del manifiesto para separar su caché del icono mostrado por Safari. La confirmación final requiere iOS real.
+
+Se reemplazaron las pantallas intermedias de carga por un indicador unificado sin botón de reintento durante solicitudes normales. El indicador se revela tras 350 ms para reducir el parpadeo en cargas rápidas.

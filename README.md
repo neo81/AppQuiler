@@ -139,3 +139,5 @@ Las fichas de reservas móviles usan nombres de 19 px, fechas e importes de 16 p
 El inicio identifica el período del resumen (verano o año completo) y explica qué totales filtra. El menú móvil usa una capa opaca sobre la cabecera y la PWA utiliza una barra de estado de iOS no translúcida.
 
 Se retiraron del Inicio el selector de período y su leyenda. El resumen conserva enero-marzo de 2027 hasta definir una sección de reportes. El icono iOS usa una referencia nueva sin parámetros y una copia de compatibilidad en la raíz.
+
+La carga inicial utiliza un indicador discreto con aparición demorada; el botón de reintento solo aparece cuando hay un error de conexión.
