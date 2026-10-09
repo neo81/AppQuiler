@@ -43,3 +43,5 @@ Se verificaron todos los PNG de instalación: dimensiones declaradas correctas y
 Se reemplazaron las pantallas intermedias de carga por un indicador unificado sin botón de reintento durante solicitudes normales. El indicador se revela tras 350 ms para reducir el parpadeo en cargas rápidas.
 
 Se añadió navegación inferior móvil de estilo cristal con cápsula activa animada, tomando como referencia la implementación actual de AppCalorIA. Incluye etiquetas, estado accesible, movimiento reducido y fondo alternativo sin desenfoque.
+
+Se reforzó el contraste global a pedido del propietario: fondo diferenciado, bordes y controles más definidos, textos secundarios oscuros y encabezado del calendario sombreado.
