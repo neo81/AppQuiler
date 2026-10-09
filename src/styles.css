@@ -30,3 +30,31 @@
  .section-heading .text-button,.section-heading .button{font-size:13px}
  .selected-day h3{font-size:16px}.info-box p,.season-note p{font-size:13px}
 }
+
+@media(max-width:700px){
+ .dashboard-grid,.detail-grid,.settings-grid{grid-template-columns:minmax(0,1fr)}
+ .main-shell,.main-content,.card,.dashboard-grid>section{min-width:0}
+ .dashboard-grid .section-heading{flex-wrap:wrap;align-items:flex-start}
+ .dashboard-grid .section-heading>div{min-width:0;flex:1 1 100%}
+ .dashboard-grid .section-heading .text-button{margin-left:0}
+ .table-scroll{margin:0;overflow:visible}
+ .table-scroll table,.table-scroll tbody,.table-scroll tr,.table-scroll td{display:block;width:100%;min-width:0}
+ .table-scroll thead{display:none}
+ .table-scroll tr{padding:16px 0;border-bottom:1px solid var(--border)}
+ .table-scroll tr:last-child{border-bottom:0}
+ .table-scroll td{border:0;padding:5px 0;white-space:normal;overflow-wrap:anywhere}
+ .table-scroll .name-button{font-size:16px;text-align:left;white-space:normal;overflow-wrap:anywhere}
+ .table-scroll .table-sub{font-size:13px}
+ .dashboard-grid table td:nth-child(3){display:block}
+ .table-scroll td:nth-child(2)::before{content:'Ingreso / salida: ';font-size:12px;color:#47616d}
+ .table-scroll td:nth-child(3)::before{content:'Total: ';font-size:12px;color:#47616d}
+ .table-scroll td:last-child{width:auto;text-align:left}
+ .pending-row{display:grid;grid-template-columns:35px minmax(0,1fr);gap:8px 11px}
+ .pending-row>strong{grid-column:2;font-size:16px;justify-self:start}
+ .pending-row>div:nth-child(2){min-width:0;overflow-wrap:anywhere}
+ .pending-row span{font-size:12px}.pending-row>div strong{font-size:14px}
+ .season-note{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:start;gap:12px}
+ .season-note>div{min-width:0}.season-note h3{font-size:16px;line-height:1.4}
+ .season-note p{font-size:14px;line-height:1.5}
+ .season-note .button{grid-column:1 / -1;margin:0;width:100%;font-size:14px;min-height:44px}
+}
