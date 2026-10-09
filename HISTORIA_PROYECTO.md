@@ -25,3 +25,5 @@ Se corrigió la edición de cantidad de personas para permitir un valor vacío m
 Se movieron los datos identificatorios del huésped al encabezado de la ficha de reserva, debajo del nombre. Se agregó compatibilidad visual con estadías automáticas de más de dos semanas.
 
 Se reemplazaron etiquetas diarias por barras continuas por fila semanal, con filas separadas para salidas e ingresos coincidentes.
+
+Se aumentó la tipografía móvil de calendario, formularios, detalles y resúmenes, y el área de controles táctiles. Las barras móviles pasan de 9 a 12 px y los números de fechas de 11 a 14 px.

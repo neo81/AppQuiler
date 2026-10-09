@@ -10,3 +10,23 @@
 
 .reservation-guest-contact{display:flex;align-items:center;gap:6px}.page-heading .reservation-guest-identification{color:var(--text);font-weight:500;overflow-wrap:anywhere}
 .calendar-week{position:relative;border-bottom:1px solid #edf1f3}.calendar-week-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));position:absolute;inset:0}.calendar-week .calendar-day{min-height:0;border-bottom:0}.calendar-week-events{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:25px;gap:4px 0;padding:42px 0 8px;pointer-events:none}.calendar-week-events .week-stay{pointer-events:auto;width:auto;margin:0 2px;padding:5px 8px;font-size:10px;justify-content:space-between;border-radius:4px;overflow:hidden}.calendar-week-events .event-name{font-size:inherit}.calendar-week-events .blocked{justify-content:flex-start}@media(max-width:600px){.calendar-week-events{padding-top:36px;grid-auto-rows:23px}.calendar-week-events .week-stay{font-size:9px;padding:4px 5px}}
+
+@media(max-width:700px){
+ body{font-size:16px}
+ .page-heading p{font-size:15px;line-height:1.5}
+ .breadcrumb{font-size:12px}.private-label{font-size:11px}
+ .button{font-size:14px;min-height:44px}.icon-button{min-width:44px;min-height:44px}
+ .field{font-size:14px}.field small,.muted-text.small,.small{font-size:13px;line-height:1.5}
+ .stat-top>span{font-size:12px}.stat-card p{font-size:12px}.table-sub{font-size:12px}
+ .badge{font-size:11px}.overview-item small{font-size:12px}.payment-row span{font-size:12px}
+ .calendar-toolbar .eyebrow{font-size:11px}.calendar-weekdays>div{font-size:12px;color:#47616d}
+ .day-number{font-size:14px;width:36px;height:36px;margin:0 2px 5px;color:#47616d}
+ .calendar-week-events{padding-top:45px;grid-auto-rows:32px;gap:5px 0}
+ .calendar-week-events .week-stay{font-size:12px;padding:6px 5px;min-height:32px}
+ .calendar-week-events .event-direction{font-size:12px}
+ .calendar-legend,.calendar-legend p{font-size:12px}
+ .month-controls{gap:4px}.month-controls .field{min-width:0;max-width:none}
+ .month-controls .today{font-size:13px;min-height:44px;padding:8px}
+ .section-heading .text-button,.section-heading .button{font-size:13px}
+ .selected-day h3{font-size:16px}.info-box p,.season-note p{font-size:13px}
+}

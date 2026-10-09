@@ -129,3 +129,5 @@ El formulario calcula la modalidad automáticamente a partir de las fechas: hast
 La ficha de reserva muestra el teléfono y las observaciones identificatorias del huésped inmediatamente debajo de su nombre.
 
 El calendario muestra cada estadía en barras continuas por semana, con el nombre una vez por tramo y flechas de ingreso, salida o continuación.
+
+Se ampliaron textos y controles de la interfaz móvil, especialmente fechas y barras del calendario, para mejorar la lectura en iPhone 13 Pro y 14 Pro sin modificar el zoom.
