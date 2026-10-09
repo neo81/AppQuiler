@@ -37,3 +37,5 @@ Se corrigió la superposición del encabezado al abrir el menú móvil, se cambi
 Se versionó la referencia del icono de iOS y se declaró su tamaño de 180 px para renovar la instalación. Las correcciones de menú y períodos ya estaban incorporadas en 26fade6.
 
 Se quitaron los controles y explicación del período del Inicio a pedido del propietario. Se mantuvo el período enero-marzo 2027. Se renovó el archivo referenciado por apple-touch-icon con URL absoluta y fallback precomposed para investigar la instalación en iOS.
+
+Se verificaron todos los PNG de instalación: dimensiones declaradas correctas y RGB opaco, respuestas image/png. Se renovaron también las referencias del manifiesto para separar su caché del icono mostrado por Safari. La confirmación final requiere iOS real.
