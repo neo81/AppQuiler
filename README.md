@@ -137,3 +137,5 @@ En móviles, próximas estadías y reservas se muestran como fichas verticales c
 Las fichas de reservas móviles usan nombres de 19 px, fechas e importes de 16 px y estados de 14 px, con textos secundarios de mayor contraste.
 
 El inicio identifica el período del resumen (verano o año completo) y explica qué totales filtra. El menú móvil usa una capa opaca sobre la cabecera y la PWA utiliza una barra de estado de iOS no translúcida.
+
+Se retiraron del Inicio el selector de período y su leyenda. El resumen conserva enero-marzo de 2027 hasta definir una sección de reportes. El icono iOS usa una referencia nueva sin parámetros y una copia de compatibilidad en la raíz.
