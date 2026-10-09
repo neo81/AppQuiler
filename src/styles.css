@@ -88,3 +88,5 @@
 @media(max-width:700px){.mobile-bottom-nav{padding-bottom:calc(4px + env(safe-area-inset-bottom,0px))}}
 
 @media(max-width:700px) and (display-mode:standalone){.mobile-bottom-nav{padding-bottom:max(8px,calc(env(safe-area-inset-bottom,0px) - 4px))}}
+
+@media(max-width:700px) and (display-mode:standalone){.mobile-bottom-nav{padding-bottom:max(6px,calc(env(safe-area-inset-bottom,0px) - 10px))}}

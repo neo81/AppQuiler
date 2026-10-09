@@ -49,3 +49,5 @@ Se reforzó el contraste global a pedido del propietario: fondo diferenciado, bo
 Se bajó 8 px la barra inferior manteniendo el área segura del iPhone. Se ordenó explícitamente la lista de reservas por ingreso y salida, de fechas más tempranas a más tardías.
 
 Se probó bajar otros 8 px la barra en modo PWA, usando el área segura menos 4 px y un mínimo de 8 px sobre el borde del viewport. En navegador se mantiene el margen anterior.
+
+Se eliminó la ocultación de la barra al abrir fichas de reserva y formularios. La ficha conserva Reservas como sección activa. Se bajó otros 6 px en modo PWA, sujeto a prueba en dispositivo real.
